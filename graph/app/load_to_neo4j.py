@@ -52,4 +52,5 @@ for team, group in df.groupby("team_name"):
                 MERGE (a)-[r:PLAYED_WITH {team: $team}]->(b)
             """, p1_name=p1["player_name"], p2_name=p2["player_name"], team=team)
 
+
 print("All data loaded into Neo4j!")

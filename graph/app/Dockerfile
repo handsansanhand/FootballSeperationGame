@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "load_to_neo4j.py"]
+CMD ["python", "load_to_neo4j_bulk.py"]

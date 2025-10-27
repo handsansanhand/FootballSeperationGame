@@ -1,0 +1,15 @@
+:auto
+LOAD CSV WITH HEADERS FROM 'file:///teammates.csv' AS row
+CALL {
+    WITH row
+    MATCH (a:Player {name: row.player1})
+    MATCH (b:Player {name: row.player2})
+    MERGE (a)-[:PLAYED_WITH {team: row.team}]->(b)
+    MERGE (b)-[:PLAYED_WITH {team: row.team}]->(a)
+} IN TRANSACTIONS OF 10000 ROWS;
+
+
+MATCH (p1:Player {name: "Xabi Alonso"}), (p2:Player {name: "Roy Keane"})
+MATCH path = shortestPath((p1)-[:PLAYED_WITH*]-(p2))
+RETURN [n IN nodes(path) | n.name] AS players_in_path,
+       [r IN relationships(path) | r.team] AS teams_in_path;
